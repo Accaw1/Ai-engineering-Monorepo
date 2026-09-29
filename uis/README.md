@@ -7,6 +7,8 @@ The two main projects stored here are:
 - **`website`** — the company's public-facing web presence.
 - **`backoffice`** — the internal admin application. This is the ideal place to develop multiple solutions within a single project: authentication, people management, operations management, internal communication, and other back-office capabilities.
 
+The Brasaland public website is in [`website/`](./website/README.md). It provides the landing page and a locally simulated contact form; see its README for Codespaces run instructions.
+
 Organize `uis/` by **different concerns** — each subfolder covers a distinct area of the company (for example, public web vs internal operations) and includes its own technical and functional documentation.
 
 - **Main purpose**: to centralize in a single place all frontend applications that support the company's use cases.
