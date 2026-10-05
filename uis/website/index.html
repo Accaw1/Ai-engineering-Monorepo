@@ -13,13 +13,15 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": "Restaurant",
         "name": "Brasaland",
+        "servesCuisine": "Grilled food",
         "foundingDate": "2008",
         "foundingLocation": {
           "@type": "Place",
           "name": "Medellín, Colombia"
         },
+        "areaServed": ["Colombia", "Florida, United States"],
         "description": "A family-founded grilled food restaurant company with 14 company-owned restaurants across Colombia and Florida. Brasaland is built on consistent food, warm service, and speed."
       }
     </script>
@@ -32,7 +34,8 @@
           <span class="font-display text-2xl leading-none">brasaland</span>
         </a>
         <div class="flex items-center gap-5 sm:gap-9">
-          <a class="hidden text-sm font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive sm:inline" href="#our-story">Our story</a>
+          <a class="hidden text-sm font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive sm:inline" href="#locations">Locations</a>
+          <a class="hidden text-sm font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive sm:inline" href="#brasa-points">Brasa Points</a>
           <a class="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-olive focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive" href="contact.html">Get in touch</a>
         </div>
       </nav>
@@ -45,7 +48,7 @@
           <h1 id="hero-title" class="font-display text-5xl leading-[1.06] sm:text-6xl lg:text-7xl">Fire, flavor, and a feeling of home.</h1>
           <p class="mt-6 max-w-lg text-base leading-7 text-ink/75 sm:text-lg sm:leading-8">Since 2008, Brasaland has brought people together around the grill with food made to feel familiar, service that feels warm, and a kitchen that keeps moving.</p>
           <div class="mt-8 flex flex-wrap items-center gap-4">
-            <a class="rounded-full bg-flame px-6 py-3.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#963b25] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame" href="contact.html">Connect with Brasaland</a>
+            <a class="rounded-full bg-flame px-6 py-3.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#963b25] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame" href="#brasa-points">Join Brasa Points</a>
             <a class="rounded-sm px-2 py-3 text-sm font-semibold text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" href="#our-story">Get to know us</a>
           </div>
           <div class="mt-12 grid max-w-md grid-cols-3 border-t border-line pt-5">
@@ -96,6 +99,95 @@
           <p class="mt-5 text-lg leading-8 text-ink/80">Now we're bringing that same care to a new chapter, building a more connected experience while staying true to what has always made Brasaland feel like Brasaland.</p>
           <a class="mt-8 inline-flex rounded-sm font-bold text-flame underline decoration-flame/40 underline-offset-4 hover:decoration-flame focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive" href="contact.html">Start a conversation</a>
         </div>
+      </section>
+
+      <section id="locations" aria-labelledby="locations-title" class="border-y border-line bg-white/60">
+        <div class="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:py-20 md:grid-cols-[0.8fr_1.2fr] md:items-center md:gap-16 lg:px-12 lg:py-24">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-flame">Find your table</p>
+            <h2 id="locations-title" class="mt-3 max-w-sm font-display text-4xl leading-tight sm:text-5xl">Two markets, one familiar welcome.</h2>
+          </div>
+          <div class="grid gap-8 sm:grid-cols-2">
+            <article class="border-t-2 border-flame pt-5">
+              <p class="text-sm font-semibold text-flame">Colombia</p>
+              <h3 class="mt-2 font-display text-3xl">Medellín</h3>
+              <p class="mt-3 text-sm leading-6 text-ink/70">Our family story started here in 2008. Brasaland restaurants across Colombia carry that same grill-made welcome.</p>
+            </article>
+            <article class="border-t-2 border-olive pt-5">
+              <p class="text-sm font-semibold text-olive">United States</p>
+              <h3 class="mt-2 font-display text-3xl">Florida</h3>
+              <p class="mt-3 text-sm leading-6 text-ink/70">From our Miami roots to our Florida restaurants, the food, service, and pace stay unmistakably Brasaland.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="ordering-title" class="bg-olive py-10 text-white sm:py-12">
+        <div class="mx-auto flex max-w-7xl flex-col gap-5 px-5 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12">
+          <div class="max-w-2xl">
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#f0b999]">A quick note</p>
+            <h2 id="ordering-title" class="mt-2 font-display text-3xl leading-tight sm:text-4xl">Online ordering is not available yet.</h2>
+            <p class="mt-3 text-sm leading-6 text-white/80">We are working on a more connected digital experience. For now, come see us in person.</p>
+          </div>
+          <a class="inline-flex w-fit shrink-0 rounded-full border border-white/60 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" href="#locations">Explore our locations</a>
+        </div>
+      </section>
+
+      <section id="brasa-points" aria-labelledby="points-title" class="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:py-20 md:grid-cols-[0.8fr_1.2fr] md:gap-16 lg:px-12 lg:py-24">
+        <div class="max-w-lg">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-flame">For our regulars</p>
+          <h2 id="points-title" class="mt-3 font-display text-4xl leading-tight sm:text-5xl">Brasa Points, coming together.</h2>
+          <p class="mt-5 text-base leading-7 text-ink/75">Our loyalty program is getting a digital refresh. Join the list to be part of what comes next, wherever you call home.</p>
+          <p class="mt-5 border-l-2 border-flame pl-4 text-sm leading-6 text-ink/65">This preview does not send or store your signup details.</p>
+        </div>
+
+        <form id="loyalty-form" class="grid content-start gap-x-5 gap-y-5 sm:grid-cols-2" novalidate>
+          <div>
+            <label for="signup-name" class="mb-2 block text-sm font-semibold">Your name <span aria-hidden="true" class="text-flame">*</span></label>
+            <input id="signup-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" aria-describedby="signup-name-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink/40 focus:border-olive focus:ring-2 focus:ring-olive/20" />
+            <p id="signup-name-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
+          </div>
+          <div>
+            <label for="signup-email" class="mb-2 block text-sm font-semibold">Email address <span aria-hidden="true" class="text-flame">*</span></label>
+            <input id="signup-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="signup-email-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink/40 focus:border-olive focus:ring-2 focus:ring-olive/20" />
+            <p id="signup-email-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
+          </div>
+          <div>
+            <label for="signup-country" class="mb-2 block text-sm font-semibold">Country <span aria-hidden="true" class="text-flame">*</span></label>
+            <select id="signup-country" name="country" required aria-describedby="signup-country-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20">
+              <option value="">Choose a country</option>
+              <option value="CO">Colombia</option>
+              <option value="US">United States</option>
+            </select>
+            <p id="signup-country-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
+          </div>
+          <div>
+            <label for="signup-location" class="mb-2 block text-sm font-semibold">Nearest location <span aria-hidden="true" class="text-flame">*</span></label>
+            <select id="signup-location" name="location" required aria-describedby="signup-location-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20">
+              <option value="">Choose a location</option>
+              <option value="medellin">Medellín</option>
+              <option value="florida">Florida</option>
+              <option value="other">Somewhere else</option>
+            </select>
+            <p id="signup-location-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="signup-dob" class="mb-2 block text-sm font-semibold">Date of birth <span aria-hidden="true" class="text-flame">*</span></label>
+            <input id="signup-dob" name="dob" type="date" autocomplete="bday" required aria-describedby="signup-dob-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20 sm:max-w-xs" />
+            <p id="signup-dob-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="signup-terms" class="flex items-start gap-3 text-sm leading-6">
+              <input id="signup-terms" name="terms" type="checkbox" required aria-describedby="signup-terms-error" aria-invalid="false" class="mt-1 size-4 shrink-0 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />
+              <span>I agree to the Brasa Points terms and conditions. <span aria-hidden="true" class="text-flame">*</span></span>
+            </label>
+            <p id="signup-terms-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
+          </div>
+          <div class="sm:col-span-2">
+            <button type="submit" class="rounded-full bg-flame px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#963b25] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame">Join Brasa Points</button>
+            <p id="signup-status" class="mt-4 min-h-6 text-sm font-semibold text-olive" role="status" aria-live="polite" tabindex="-1"></p>
+          </div>
+        </form>
       </section>
 
       <section aria-labelledby="contact-title" class="border-y border-line bg-[#eee9dc]">

@@ -1,12 +1,21 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { validateContactForm } from './validation.js';
+import { validateContactForm, validateLoyaltySignup } from './validation.js';
 
 const validSubmission = {
   name: 'Jordan Lee',
   email: 'jordan@example.com',
   phone: '',
   message: 'I would like to learn more about Brasaland.',
+};
+
+const validSignup = {
+  name: 'Jordan Lee',
+  email: 'jordan@example.com',
+  country: 'CO',
+  location: 'medellin',
+  dob: '1990-06-15',
+  terms: true,
 };
 
 test('accepts valid contact details without an optional phone number', () => {
@@ -36,4 +45,28 @@ test('accepts international phone punctuation and rejects invalid digit counts o
 test('enforces message length after trimming whitespace', () => {
   assert.match(validateContactForm({ ...validSubmission, message: '  short  ' }).message, /at least 10/);
   assert.match(validateContactForm({ ...validSubmission, message: 'M'.repeat(1001) }).message, /1,000 characters/);
+});
+
+test('accepts a complete Brasa Points signup from an adult', () => {
+  assert.deepEqual(validateLoyaltySignup(validSignup, new Date(2026, 9, 5)), {});
+});
+
+test('requires signup identity, market, location, date of birth, and terms', () => {
+  const errors = validateLoyaltySignup({}, new Date(2026, 9, 5));
+  for (const field of ['name', 'email', 'country', 'location', 'dob', 'terms']) {
+    assert.ok(errors[field], `expected ${field} to be required`);
+  }
+});
+
+test('requires signup members to be at least 18 and rejects invalid or future birth dates', () => {
+  const today = new Date(2026, 9, 5);
+  assert.match(validateLoyaltySignup({ ...validSignup, dob: '2008-10-06' }, today).dob, /18 or older/);
+  assert.match(validateLoyaltySignup({ ...validSignup, dob: '2026-10-06' }, today).dob, /18 or older/);
+  assert.match(validateLoyaltySignup({ ...validSignup, dob: '2000-02-30' }, today).dob, /18 or older/);
+  assert.deepEqual(validateLoyaltySignup({ ...validSignup, dob: '2008-10-05' }, today), {});
+});
+
+test('keeps the selected location within the selected country', () => {
+  assert.match(validateLoyaltySignup({ ...validSignup, location: 'florida' }).location, /Colombia/);
+  assert.match(validateLoyaltySignup({ ...validSignup, country: 'US', location: 'medellin' }).location, /United States/);
 });
