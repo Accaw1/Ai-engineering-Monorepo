@@ -1,5 +1,11 @@
 import './styles.css';
-import { validateContactForm, validateLoyaltySignup } from './validation.js';
+import {
+  getCitiesForCountry,
+  getDialingCode,
+  getLocationsForCountryAndCity,
+  validateApplicationForm,
+  validateContactForm,
+} from './validation.js';
 
 const form = document.querySelector('#contact-form');
 
@@ -75,17 +81,18 @@ if (form) {
   });
 }
 
-const loyaltyForm = document.querySelector('#loyalty-form');
+const applicationForm = document.querySelector('#application-form');
 
-if (loyaltyForm) {
-  const fieldNames = ['name', 'email', 'country', 'location', 'dob', 'terms'];
-  const status = document.querySelector('#signup-status');
-  const fields = Object.fromEntries(fieldNames.map((name) => [name, loyaltyForm.elements.namedItem(name)]));
+if (applicationForm) {
+  const fieldNames = ['name', 'email', 'country', 'city', 'favoriteLocation', 'phone', 'dob', 'howFound', 'terms'];
+  const status = document.querySelector('#application-status');
+  const phonePrefix = document.querySelector('#application-phone-prefix');
+  const fields = Object.fromEntries(fieldNames.map((name) => [name, applicationForm.elements.namedItem(name)]));
   let hasAttemptedSubmit = false;
 
   function setFieldState(name, error = '', showValid = false) {
     const field = fields[name];
-    const errorElement = document.querySelector(`#signup-${name}-error`);
+    const errorElement = document.querySelector(`#application-${name}-error`);
     errorElement.textContent = error;
     field.setAttribute('aria-invalid', String(Boolean(error)));
     field.classList.toggle('border-red-700', Boolean(error));
@@ -104,7 +111,10 @@ if (loyaltyForm) {
   }
 
   function getValues() {
-    return Object.fromEntries(fieldNames.map((name) => [name, name === 'terms' ? fields[name].checked : fields[name].value]));
+    return {
+      ...Object.fromEntries(fieldNames.map((name) => [name, name === 'terms' ? fields[name].checked : fields[name].value])),
+      phoneCode: phonePrefix.textContent,
+    };
   }
 
   function renderErrors(errors, showValid) {
@@ -114,21 +124,37 @@ if (loyaltyForm) {
   function updateField(event) {
     const field = event.target;
     if (!field.name || !fieldNames.includes(field.name)) return;
-    const errors = hasAttemptedSubmit ? validateLoyaltySignup(getValues()) : {};
+
+    if (field.name === 'country') {
+      const country = fields.country.value;
+      phonePrefix.textContent = getDialingCode(country) || '\u2014';
+      setOptions(fields.city, 'Choose a city', getCitiesForCountry(country));
+      setOptions(fields.favoriteLocation, 'Choose a city first', []);
+    } else if (field.name === 'city') {
+      setOptions(fields.favoriteLocation, 'Choose a favorite location', getLocationsForCountryAndCity(fields.country.value, fields.city.value));
+    }
+
+    const errors = hasAttemptedSubmit ? validateApplicationForm(getValues()) : {};
     renderErrors(errors, hasAttemptedSubmit);
     clearStatus();
   }
 
-  loyaltyForm.addEventListener('input', updateField);
-  loyaltyForm.addEventListener('change', updateField);
+  function setOptions(select, placeholder, options) {
+    select.replaceChildren(new Option(placeholder, ''));
+    options.forEach(({ value, label }) => select.add(new Option(label, value)));
+    select.disabled = options.length === 0;
+  }
 
-  loyaltyForm.addEventListener('submit', (event) => {
+  applicationForm.addEventListener('input', updateField);
+  applicationForm.addEventListener('change', updateField);
+
+  applicationForm.addEventListener('submit', (event) => {
     event.preventDefault();
     hasAttemptedSubmit = true;
     clearStatus();
 
     const values = getValues();
-    const errors = validateLoyaltySignup(values);
+    const errors = validateApplicationForm(values);
     renderErrors(errors, true);
 
     if (Object.keys(errors).length > 0) {
@@ -140,17 +166,21 @@ if (loyaltyForm) {
       return;
     }
 
-    status.textContent = `Welcome to Brasa Points, ${values.name.trim()}! Your signup is confirmed in this preview; your details have not been sent or stored.`;
+    const selectedLocation = fields.favoriteLocation.selectedOptions[0].textContent;
+    status.textContent = `Welcome to Brasa Points, ${values.name.trim()}! Your application is complete. ${selectedLocation} is now your favorite Brasaland location, and updates would be sent to ${values.email}. This is a local preview; your information was not sent or saved.`;
     status.focus();
   });
 
-  loyaltyForm.addEventListener('reset', () => {
+  applicationForm.addEventListener('reset', () => {
     window.setTimeout(() => {
       fieldNames.forEach((name) => {
         fields[name].classList.remove('border-red-700', 'ring-1', 'ring-red-700/30', 'border-olive', 'bg-[#f4f7f1]');
         fields[name].setAttribute('aria-invalid', 'false');
-        document.querySelector(`#signup-${name}-error`).textContent = '';
+        document.querySelector(`#application-${name}-error`).textContent = '';
       });
+      phonePrefix.textContent = '\u2014';
+      setOptions(fields.city, 'Choose a country first', []);
+      setOptions(fields.favoriteLocation, 'Choose a city first', []);
       hasAttemptedSubmit = false;
       clearStatus();
     });

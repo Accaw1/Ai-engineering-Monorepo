@@ -1,6 +1,6 @@
 # Brasaland Website
 
-The public Brasaland website lives in `uis/website/`. It contains a company landing page and a separate contact-request page. It uses Vite, Tailwind CSS 4, semantic HTML, and browser-native JavaScript; it has no backend.
+The public Brasaland website lives in `uis/website/`. It contains a company landing page, a Brasa Points application page, and a separate contact-request page. It uses Vite, Tailwind CSS 4, semantic HTML, and browser-native JavaScript; it has no backend.
 
 ## Run in GitHub Codespaces
 
@@ -12,7 +12,7 @@ npm install
 npm run dev -- --host 0.0.0.0
 ```
 
-Vite serves on port **5173** by default. In Codespaces, open the **Ports** tab and open the forwarded port 5173 URL. The landing page is `/` and the contact page is `/contact.html`.
+Vite serves on port **5173** by default. In Codespaces, open the **Ports** tab and open the forwarded port 5173 URL. The landing page is `/`, the Brasa Points application is `/application.html`, and the contact page is `/contact.html`.
 
 ## Build and test
 

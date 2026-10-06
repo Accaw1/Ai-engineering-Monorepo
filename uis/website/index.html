@@ -36,7 +36,7 @@
         <div class="flex items-center gap-5 sm:gap-9">
           <a class="hidden text-sm font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive sm:inline" href="#locations">Locations</a>
           <a class="hidden text-sm font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive sm:inline" href="#brasa-points">Brasa Points</a>
-          <a class="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-olive focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive" href="contact.html">Get in touch</a>
+          <a class="rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-olive focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive" href="application.html">Join Brasa Points</a>
         </div>
       </nav>
     </header>
@@ -141,53 +141,10 @@
           <p class="mt-5 border-l-2 border-flame pl-4 text-sm leading-6 text-ink/65">This preview does not send or store your signup details.</p>
         </div>
 
-        <form id="loyalty-form" class="grid content-start gap-x-5 gap-y-5 sm:grid-cols-2" novalidate>
-          <div>
-            <label for="signup-name" class="mb-2 block text-sm font-semibold">Your name <span aria-hidden="true" class="text-flame">*</span></label>
-            <input id="signup-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" aria-describedby="signup-name-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink/40 focus:border-olive focus:ring-2 focus:ring-olive/20" />
-            <p id="signup-name-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
-          </div>
-          <div>
-            <label for="signup-email" class="mb-2 block text-sm font-semibold">Email address <span aria-hidden="true" class="text-flame">*</span></label>
-            <input id="signup-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="signup-email-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink/40 focus:border-olive focus:ring-2 focus:ring-olive/20" />
-            <p id="signup-email-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
-          </div>
-          <div>
-            <label for="signup-country" class="mb-2 block text-sm font-semibold">Country <span aria-hidden="true" class="text-flame">*</span></label>
-            <select id="signup-country" name="country" required aria-describedby="signup-country-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20">
-              <option value="">Choose a country</option>
-              <option value="CO">Colombia</option>
-              <option value="US">United States</option>
-            </select>
-            <p id="signup-country-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
-          </div>
-          <div>
-            <label for="signup-location" class="mb-2 block text-sm font-semibold">Nearest location <span aria-hidden="true" class="text-flame">*</span></label>
-            <select id="signup-location" name="location" required aria-describedby="signup-location-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20">
-              <option value="">Choose a location</option>
-              <option value="medellin">Medellín</option>
-              <option value="florida">Florida</option>
-              <option value="other">Somewhere else</option>
-            </select>
-            <p id="signup-location-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
-          </div>
-          <div class="sm:col-span-2">
-            <label for="signup-dob" class="mb-2 block text-sm font-semibold">Date of birth <span aria-hidden="true" class="text-flame">*</span></label>
-            <input id="signup-dob" name="dob" type="date" autocomplete="bday" required aria-describedby="signup-dob-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20 sm:max-w-xs" />
-            <p id="signup-dob-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
-          </div>
-          <div class="sm:col-span-2">
-            <label for="signup-terms" class="flex items-start gap-3 text-sm leading-6">
-              <input id="signup-terms" name="terms" type="checkbox" required aria-describedby="signup-terms-error" aria-invalid="false" class="mt-1 size-4 shrink-0 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />
-              <span>I agree to the Brasa Points terms and conditions. <span aria-hidden="true" class="text-flame">*</span></span>
-            </label>
-            <p id="signup-terms-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
-          </div>
-          <div class="sm:col-span-2">
-            <button type="submit" class="rounded-full bg-flame px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#963b25] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame">Join Brasa Points</button>
-            <p id="signup-status" class="mt-4 min-h-6 text-sm font-semibold text-olive" role="status" aria-live="polite" tabindex="-1"></p>
-          </div>
-        </form>
+        <div class="border-t border-line pt-6 sm:pt-8">
+          <p class="max-w-xl text-sm leading-6 text-ink/65">Choose your home country and nearest Brasaland restaurant when you apply. Applicants must be 18 or older.</p>
+          <a class="mt-6 inline-flex w-fit rounded-full bg-flame px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#963b25] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame" href="application.html">Apply to Brasa Points</a>
+        </div>
       </section>
 
       <section aria-labelledby="contact-title" class="border-y border-line bg-[#eee9dc]">

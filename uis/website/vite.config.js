@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         contact: resolve(import.meta.dirname, 'contact.html'),
+        application: resolve(import.meta.dirname, 'application.html'),
       },
     },
   },

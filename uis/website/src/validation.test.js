@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { validateContactForm, validateLoyaltySignup } from './validation.js';
+import {
+  getCitiesForCountry,
+  getDialingCode,
+  getLocationsForCountryAndCity,
+  validateApplicationForm,
+  validateContactForm,
+} from './validation.js';
 
 const validSubmission = {
   name: 'Jordan Lee',
@@ -9,12 +15,16 @@ const validSubmission = {
   message: 'I would like to learn more about Brasaland.',
 };
 
-const validSignup = {
+const validApplication = {
   name: 'Jordan Lee',
   email: 'jordan@example.com',
-  country: 'CO',
-  location: 'medellin',
+  phone: '305 555 0123',
+  phoneCode: '+1',
+  country: 'US',
+  city: 'miami',
+  favoriteLocation: 'miami',
   dob: '1990-06-15',
+  howFound: 'friends-family',
   terms: true,
 };
 
@@ -47,26 +57,35 @@ test('enforces message length after trimming whitespace', () => {
   assert.match(validateContactForm({ ...validSubmission, message: 'M'.repeat(1001) }).message, /1,000 characters/);
 });
 
-test('accepts a complete Brasa Points signup from an adult', () => {
-  assert.deepEqual(validateLoyaltySignup(validSignup, new Date(2026, 9, 5)), {});
+test('accepts a complete Brasa Points application from an adult', () => {
+  assert.deepEqual(validateApplicationForm(validApplication, new Date(2026, 9, 5)), {});
 });
 
-test('requires signup identity, market, location, date of birth, and terms', () => {
-  const errors = validateLoyaltySignup({}, new Date(2026, 9, 5));
-  for (const field of ['name', 'email', 'country', 'location', 'dob', 'terms']) {
+test('requires the application identity, phone, location, referral, age, and consent fields', () => {
+  const errors = validateApplicationForm({}, new Date(2026, 9, 5));
+  for (const field of ['name', 'email', 'phone', 'country', 'city', 'favoriteLocation', 'dob', 'howFound', 'terms']) {
     assert.ok(errors[field], `expected ${field} to be required`);
   }
 });
 
-test('requires signup members to be at least 18 and rejects invalid or future birth dates', () => {
+test('requires application members to be at least 18 and rejects invalid or future birth dates', () => {
   const today = new Date(2026, 9, 5);
-  assert.match(validateLoyaltySignup({ ...validSignup, dob: '2008-10-06' }, today).dob, /18 or older/);
-  assert.match(validateLoyaltySignup({ ...validSignup, dob: '2026-10-06' }, today).dob, /18 or older/);
-  assert.match(validateLoyaltySignup({ ...validSignup, dob: '2000-02-30' }, today).dob, /18 or older/);
-  assert.deepEqual(validateLoyaltySignup({ ...validSignup, dob: '2008-10-05' }, today), {});
+  assert.match(validateApplicationForm({ ...validApplication, dob: '2008-10-06' }, today).dob, /18 or older/);
+  assert.match(validateApplicationForm({ ...validApplication, dob: '2026-10-06' }, today).dob, /18 or older/);
+  assert.match(validateApplicationForm({ ...validApplication, dob: '2000-02-30' }, today).dob, /18 or older/);
+  assert.deepEqual(validateApplicationForm({ ...validApplication, dob: '2008-10-05' }, today), {});
 });
 
-test('keeps the selected location within the selected country', () => {
-  assert.match(validateLoyaltySignup({ ...validSignup, location: 'florida' }).location, /Colombia/);
-  assert.match(validateLoyaltySignup({ ...validSignup, country: 'US', location: 'medellin' }).location, /United States/);
+test('provides country-specific dialing codes, cities, and favorite locations', () => {
+  assert.equal(getDialingCode('CO'), '+57');
+  assert.equal(getDialingCode('US'), '+1');
+  assert.deepEqual(getCitiesForCountry('CO').map(({ value }) => value), ['medellin', 'other-colombia']);
+  assert.deepEqual(getCitiesForCountry('US').map(({ value }) => value), ['miami', 'other-florida']);
+  assert.deepEqual(getLocationsForCountryAndCity('CO', 'medellin').map(({ value }) => value), ['medellin-downtown', 'other-medellin']);
+  assert.deepEqual(getLocationsForCountryAndCity('US', 'miami').map(({ value }) => value), ['miami', 'other-florida']);
+});
+
+test('rejects a dial code or favorite location that does not match the selected country and city', () => {
+  assert.match(validateApplicationForm({ ...validApplication, phoneCode: '+57' }).phone, /dialing code/);
+  assert.match(validateApplicationForm({ ...validApplication, favoriteLocation: 'medellin-downtown' }).favoriteLocation, /favorite/);
 });

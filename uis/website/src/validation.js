@@ -1,7 +1,41 @@
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phonePattern = /^\+?[\d(). -]+$/;
-const signupCountries = new Set(['CO', 'US']);
-const signupLocations = new Set(['medellin', 'florida', 'other']);
+const dialingCodes = { CO: '+57', US: '+1' };
+const citiesByCountry = {
+  CO: [
+    { value: 'medellin', label: 'Medellín' },
+    { value: 'other-colombia', label: 'Another city in Colombia' },
+  ],
+  US: [
+    { value: 'miami', label: 'Miami' },
+    { value: 'other-florida', label: 'Another city in Florida' },
+  ],
+};
+const locationsByCity = {
+  'CO:medellin': [
+    { value: 'medellin-downtown', label: 'Medellín Downtown' },
+    { value: 'other-medellin', label: 'Another Medellín location' },
+  ],
+  'CO:other-colombia': [{ value: 'other-colombia', label: 'Another Colombia location' }],
+  'US:miami': [
+    { value: 'miami', label: 'Miami location' },
+    { value: 'other-florida', label: 'Another Florida location' },
+  ],
+  'US:other-florida': [{ value: 'other-florida', label: 'Another Florida location' }],
+};
+const referralSources = new Set(['friends-family', 'social-media', 'passing-by', 'online-search', 'other']);
+
+export function getDialingCode(country) {
+  return dialingCodes[country] || '';
+}
+
+export function getCitiesForCountry(country) {
+  return citiesByCountry[country] || [];
+}
+
+export function getLocationsForCountryAndCity(country, city) {
+  return locationsByCity[`${country}:${city}`] || [];
+}
 
 function isAtLeast18(dateValue, today = new Date()) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateValue);
@@ -56,10 +90,22 @@ export function validateContactForm({ name = '', email = '', phone = '', message
   return errors;
 }
 
-export function validateLoyaltySignup({ name = '', email = '', country = '', location = '', dob = '', terms = false } = {}, today = new Date()) {
+export function validateApplicationForm({
+  name = '',
+  email = '',
+  phone = '',
+  phoneCode = '',
+  country = '',
+  city = '',
+  favoriteLocation = '',
+  dob = '',
+  howFound = '',
+  terms = false,
+} = {}, today = new Date()) {
   const errors = {};
   const trimmedName = name.trim();
   const trimmedEmail = email.trim();
+  const trimmedPhone = phone.trim();
 
   if (!trimmedName) {
     errors.name = 'Please enter your name.';
@@ -75,20 +121,36 @@ export function validateLoyaltySignup({ name = '', email = '', country = '', loc
     errors.email = 'Please enter a valid email address.';
   }
 
-  if (!signupCountries.has(country)) {
-    errors.country = 'Please choose a country.';
-  } else if (!signupLocations.has(location)) {
-    errors.location = 'Please choose a location.';
-  } else if (country === 'CO' && location === 'florida') {
-    errors.location = 'Choose a location in Colombia.';
-  } else if (country === 'US' && location === 'medellin') {
-    errors.location = 'Choose a location in the United States.';
+  if (!trimmedPhone) {
+    errors.phone = 'Please enter your phone number.';
+  } else {
+    const digitCount = trimmedPhone.replace(/\D/g, '').length;
+    if (!phonePattern.test(trimmedPhone) || digitCount < 7 || digitCount > 15) {
+      errors.phone = 'Enter a phone number with 7 to 15 digits.';
+    }
   }
+
+  if (!getDialingCode(country)) {
+    errors.country = 'Please choose a country.';
+  }
+  if (getDialingCode(country) && phoneCode !== getDialingCode(country)) {
+    errors.phone = 'Choose a country to set the correct dialing code.';
+  }
+
+  const cities = getCitiesForCountry(country);
+  if (!cities.some((option) => option.value === city)) errors.city = 'Please choose a city.';
+
+  const locations = getLocationsForCountryAndCity(country, city);
+  if (!locations.some((option) => option.value === favoriteLocation)) {
+    errors.favoriteLocation = 'Please choose your favorite Brasaland location.';
+  }
+
   if (!dob) {
     errors.dob = 'Please enter your date of birth.';
   } else if (!isAtLeast18(dob, today)) {
     errors.dob = 'You must be 18 or older to join Brasa Points.';
   }
+  if (!referralSources.has(howFound)) errors.howFound = 'Please tell us how you heard about Brasaland.';
   if (terms !== true && terms !== 'on') errors.terms = 'Please accept the terms to continue.';
 
   return errors;
