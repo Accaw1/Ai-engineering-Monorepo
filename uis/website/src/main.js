@@ -114,6 +114,8 @@ if (applicationForm) {
     return {
       ...Object.fromEntries(fieldNames.map((name) => [name, name === 'terms' ? fields[name].checked : fields[name].value])),
       phoneCode: phonePrefix.textContent,
+      dietaryPreferences: Array.from(applicationForm.querySelectorAll('[name="dietaryPreferences"]:checked'), (checkbox) => checkbox.value),
+      wantsOffers: applicationForm.elements.namedItem('wantsOffers').checked,
     };
   }
 
@@ -123,7 +125,7 @@ if (applicationForm) {
 
   function updateField(event) {
     const field = event.target;
-    if (!field.name || !fieldNames.includes(field.name)) return;
+    if (!field.name || (!fieldNames.includes(field.name) && !['dietaryPreferences', 'wantsOffers'].includes(field.name))) return;
 
     if (field.name === 'country') {
       const country = fields.country.value;
@@ -132,6 +134,13 @@ if (applicationForm) {
       setOptions(fields.favoriteLocation, 'Choose a city first', []);
     } else if (field.name === 'city') {
       setOptions(fields.favoriteLocation, 'Choose a favorite location', getLocationsForCountryAndCity(fields.country.value, fields.city.value));
+    } else if (field.name === 'dietaryPreferences') {
+      const noRestrictions = applicationForm.querySelector('[name="dietaryPreferences"][value="none"]');
+      if (field.value === 'none' && field.checked) {
+        applicationForm.querySelectorAll('[name="dietaryPreferences"]:not([value="none"])').forEach((checkbox) => { checkbox.checked = false; });
+      } else if (field.checked) {
+        noRestrictions.checked = false;
+      }
     }
 
     const errors = hasAttemptedSubmit ? validateApplicationForm(getValues()) : {};
@@ -166,8 +175,7 @@ if (applicationForm) {
       return;
     }
 
-    const selectedLocation = fields.favoriteLocation.selectedOptions[0].textContent;
-    status.textContent = `Welcome to Brasa Points, ${values.name.trim()}! Your application is complete. ${selectedLocation} is now your favorite Brasaland location, and updates would be sent to ${values.email}. This is a local preview; your information was not sent or saved.`;
+    status.textContent = `Welcome to Brasa Points! Your registration was successful. You will receive a confirmation email in the next few minutes with your account details and how to start earning points. You can now enjoy your benefits at any of our 14 locations!`;
     status.focus();
   });
 

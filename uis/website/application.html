@@ -33,12 +33,12 @@
         <form id="application-form" class="grid gap-x-5 gap-y-5 sm:grid-cols-2" novalidate>
           <div>
             <label for="application-name" class="mb-2 block text-sm font-semibold">Your name <span aria-hidden="true" class="text-flame">*</span></label>
-            <input id="application-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" aria-describedby="application-name-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20" />
+            <input id="application-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="100" placeholder="Alex Rivera" aria-describedby="application-name-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink/40 focus:border-olive focus:ring-2 focus:ring-olive/20" />
             <p id="application-name-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
           </div>
           <div>
             <label for="application-email" class="mb-2 block text-sm font-semibold">Email address <span aria-hidden="true" class="text-flame">*</span></label>
-            <input id="application-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="application-email-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20" />
+            <input id="application-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" placeholder="name@email.com" aria-describedby="application-email-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors placeholder:text-ink/40 focus:border-olive focus:ring-2 focus:ring-olive/20" />
             <p id="application-email-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
           </div>
           <div>
@@ -58,8 +58,8 @@
             <p id="application-city-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
           </div>
           <div>
-            <label for="application-favorite-location" class="mb-2 block text-sm font-semibold">Favorite location <span aria-hidden="true" class="text-flame">*</span></label>
-            <select id="application-favorite-location" name="favoriteLocation" required disabled aria-describedby="application-favoriteLocation-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20 disabled:cursor-not-allowed disabled:bg-paper">
+            <label for="application-favorite-location" class="mb-2 block text-sm font-semibold">Favorite Brasaland location <span class="font-normal text-ink/60">(optional)</span></label>
+            <select id="application-favorite-location" name="favoriteLocation" disabled aria-describedby="application-favoriteLocation-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20 disabled:cursor-not-allowed disabled:bg-paper">
               <option value="">Choose a city first</option>
             </select>
             <p id="application-favoriteLocation-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
@@ -68,7 +68,7 @@
             <label for="application-phone" class="mb-2 block text-sm font-semibold">Phone number <span aria-hidden="true" class="text-flame">*</span></label>
             <div class="flex rounded-md border border-line bg-white focus-within:border-olive focus-within:ring-2 focus-within:ring-olive/20">
               <span id="application-phone-prefix" class="grid min-w-14 place-items-center border-r border-line px-3 text-base font-semibold text-ink/70" aria-label="Country dialing code">&mdash;</span>
-              <input id="application-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" required aria-describedby="application-phone-error" aria-invalid="false" class="min-w-0 flex-1 rounded-r-md bg-transparent px-4 py-3 text-base text-ink outline-none" />
+              <input id="application-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" required placeholder="300 123 4567" aria-describedby="application-phone-error" aria-invalid="false" class="min-w-0 flex-1 rounded-r-md bg-transparent px-4 py-3 text-base text-ink outline-none placeholder:text-ink/40" />
             </div>
             <p id="application-phone-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
           </div>
@@ -81,20 +81,35 @@
             <label for="application-how-found" class="mb-2 block text-sm font-semibold">How did you hear about us? <span aria-hidden="true" class="text-flame">*</span></label>
             <select id="application-how-found" name="howFound" required aria-describedby="application-howFound-error" aria-invalid="false" class="w-full rounded-md border border-line bg-white px-4 py-3 text-base text-ink outline-none transition-colors focus:border-olive focus:ring-2 focus:ring-olive/20">
               <option value="">Choose an option</option>
-              <option value="friends-family">Friends or family</option>
               <option value="social-media">Social media</option>
-              <option value="passing-by">Walked by a restaurant</option>
-              <option value="online-search">Online search</option>
-              <option value="other">Another way</option>
+              <option value="recommendation">Recommendation</option>
+              <option value="walked-by">Walked by</option>
+              <option value="internet-search">Internet search</option>
+              <option value="other">Other</option>
             </select>
             <p id="application-howFound-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
           </div>
+          <fieldset class="sm:col-span-2">
+            <legend class="mb-3 text-sm font-semibold">Dietary preferences <span class="font-normal text-ink/60">(optional)</span></legend>
+            <div class="grid gap-3 sm:grid-cols-2">
+              <label class="flex items-center gap-3 text-sm"><input name="dietaryPreferences" type="checkbox" value="none" class="size-4 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />No restrictions</label>
+              <label class="flex items-center gap-3 text-sm"><input name="dietaryPreferences" type="checkbox" value="vegetarian" class="size-4 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />Vegetarian</label>
+              <label class="flex items-center gap-3 text-sm"><input name="dietaryPreferences" type="checkbox" value="gluten-free" class="size-4 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />Gluten-free</label>
+              <label class="flex items-center gap-3 text-sm"><input name="dietaryPreferences" type="checkbox" value="other" class="size-4 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />Other</label>
+            </div>
+          </fieldset>
           <div class="sm:col-span-2">
             <label for="application-terms" class="flex items-start gap-3 text-sm leading-6">
               <input id="application-terms" name="terms" type="checkbox" required aria-describedby="application-terms-error" aria-invalid="false" class="mt-1 size-4 shrink-0 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />
               <span>I agree to the Brasa Points terms and conditions. <span aria-hidden="true" class="text-flame">*</span></span>
             </label>
             <p id="application-terms-error" class="mt-2 min-h-5 text-sm text-red-800" aria-live="polite"></p>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="application-offers" class="flex items-start gap-3 text-sm leading-6">
+              <input id="application-offers" name="wantsOffers" type="checkbox" class="mt-1 size-4 shrink-0 accent-olive focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive" />
+              <span>I want to receive Brasa Points offers by email.</span>
+            </label>
           </div>
           <div class="flex flex-wrap items-center gap-3 pt-1 sm:col-span-2">
             <button type="submit" class="rounded-full bg-flame px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#963b25] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame">Join Brasa Points</button>
