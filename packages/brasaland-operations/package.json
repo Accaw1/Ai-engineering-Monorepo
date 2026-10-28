@@ -1,0 +1,21 @@
+{
+  "name": "@repo/brasaland-operations",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Brasaland operations core: sales, waste, location scoring and validations",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "demo": "tsx src/demo.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "check": "npm run typecheck && npm test",
+    "build:web": "tsc -p tsconfig.web.json",
+    "web": "npm run build:web && http-server -p 3000 -a 0.0.0.0 -c-1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "http-server": "^14.1.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

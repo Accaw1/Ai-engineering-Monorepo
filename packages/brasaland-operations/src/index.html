@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brasaland Operations — Function Tester</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script>
+      // Same palette and fonts as uis/website/src/styles.css
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              paper: "#f7f5ef",
+              ink: "#252820",
+              flame: "#b9482d",
+              "flame-dark": "#963b25",
+              olive: "#4b6048",
+              line: "#dcd8ce",
+            },
+            fontFamily: {
+              sans: ['"DM Sans"', "sans-serif"],
+              display: ['"DM Serif Display"', "Georgia", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer components {
+        .eyebrow {
+          @apply text-xs font-bold uppercase tracking-[0.16em] text-flame;
+        }
+        .section-title {
+          @apply mt-2 font-display text-3xl leading-tight sm:text-4xl;
+        }
+        .card {
+          @apply space-y-4 rounded-2xl border border-line bg-white/70 p-6;
+        }
+        .card-title {
+          @apply font-display text-2xl leading-tight text-ink;
+        }
+        .card-hint {
+          @apply text-xs text-ink/60;
+        }
+        .row {
+          @apply flex flex-wrap items-end gap-3;
+        }
+        .field {
+          @apply flex flex-col gap-1 text-xs font-semibold text-ink/70;
+        }
+        .input {
+          @apply rounded-lg border border-line bg-white px-3 py-2 text-sm font-normal text-ink focus:border-olive focus:outline-none focus:ring-2 focus:ring-olive/25;
+        }
+        .btn {
+          @apply rounded-full bg-flame px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-flame-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame;
+        }
+        .btn-secondary {
+          @apply rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-olive focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-olive;
+        }
+        .fn {
+          @apply rounded bg-paper px-1.5 py-0.5 font-mono text-[11px] text-olive;
+        }
+        .output {
+          @apply space-y-3 empty:hidden;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-paper font-sans text-ink antialiased">
+    <header class="border-b border-line/80">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-5 sm:px-8 lg:px-12">
+        <div class="inline-flex items-center gap-3">
+          <span aria-hidden="true" class="grid h-10 w-10 place-items-center rounded-full bg-flame font-display text-xl text-white">B</span>
+          <span class="font-display text-2xl leading-none">brasaland</span>
+          <span class="ml-1 rounded-full border border-line px-3 py-1 text-xs font-semibold text-ink/70">Digital</span>
+        </div>
+        <nav aria-label="Sections" class="flex flex-wrap gap-x-5 gap-y-2">
+          <a class="text-xs font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline sm:text-sm" href="#filtering">Filtering</a>
+          <a class="text-xs font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline sm:text-sm" href="#search">Search</a>
+          <a class="text-xs font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline sm:text-sm" href="#financials">Financials</a>
+          <a class="text-xs font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline sm:text-sm" href="#reports">Reports</a>
+          <a class="text-xs font-medium text-ink/75 underline-offset-4 hover:text-flame hover:underline sm:text-sm" href="#validations">Validations</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Intro + dataset -->
+      <section class="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:px-12">
+        <div>
+          <p class="eyebrow">Restaurant Operations · Milestone 2</p>
+          <h1 class="mt-4 font-display text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">Operations function tester</h1>
+          <p class="mt-5 max-w-xl text-base leading-relaxed text-ink/75">
+            Built by Brasaland Digital for Felipe Guerrero's operations team: sales, margins, waste and location
+            performance across Colombia and Florida, in COP and USD. Every control below runs the production
+            TypeScript utilities.
+          </p>
+          <div class="mt-8 grid max-w-xl grid-cols-1 gap-4 border-t border-line pt-5 sm:grid-cols-2">
+            <div>
+              <p class="text-sm font-semibold text-flame">Colombia</p>
+              <p class="mt-1 font-display text-2xl">10 restaurants</p>
+              <p class="mt-1 text-xs text-ink/65">Medellín, Bogotá and Cali · Mon–Sun 11:00 AM – 10:00 PM</p>
+            </div>
+            <div class="sm:border-l sm:border-line sm:pl-6">
+              <p class="text-sm font-semibold text-flame">United States (Florida)</p>
+              <p class="mt-1 font-display text-2xl">4 restaurants</p>
+              <p class="mt-1 text-xs text-ink/65">Miami and Orlando · Mon–Sun 11:00 AM – 10:00 PM</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="card">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="card-title">Dataset</h2>
+            <button class="btn-secondary" data-action="showDataset">View data</button>
+          </div>
+          <div class="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <label class="flex items-center gap-2">
+              <input type="radio" name="dataset" value="extended" checked class="accent-flame" />
+              Full chain (14 restaurants)
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="radio" name="dataset" value="briefing" class="accent-flame" />
+              Briefing sample
+            </label>
+          </div>
+          <div class="grid grid-cols-4 border-t border-line pt-4">
+            <div><p id="statLocations" class="font-display text-3xl">0</p><p class="mt-1 text-xs text-ink/65">Locations</p></div>
+            <div class="border-l border-line pl-3 sm:pl-5"><p id="statMenuItems" class="font-display text-3xl">0</p><p class="mt-1 text-xs text-ink/65">Menu items</p></div>
+            <div class="border-l border-line pl-3 sm:pl-5"><p id="statSales" class="font-display text-3xl">0</p><p class="mt-1 text-xs text-ink/65">Sales</p></div>
+            <div class="border-l border-line pl-3 sm:pl-5"><p id="statWasteRecords" class="font-display text-3xl">0</p><p class="mt-1 text-xs text-ink/65">Waste records</p></div>
+          </div>
+          <div class="output" data-output></div>
+        </section>
+      </section>
+
+      <!-- 1. Filtering & sorting -->
+      <section id="filtering" class="border-t border-line bg-white/40">
+        <div class="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12">
+          <p class="eyebrow">01 · Collections</p>
+          <h2 class="section-title">Filtering &amp; sorting</h2>
+          <div class="mt-8 grid gap-6 lg:grid-cols-2">
+            <section class="card">
+              <h3 class="card-title">Filter sales</h3>
+              <div class="row">
+                <label class="field">Location<select id="filterLocationId" class="input" data-location-select></select></label>
+                <button class="btn" data-action="filterByLocation">By location</button>
+              </div>
+              <p class="card-hint"><span class="fn">filterSalesByLocation</span></p>
+              <div class="row">
+                <label class="field">From<input id="filterStart" type="datetime-local" class="input" value="2024-03-15T00:00" /></label>
+                <label class="field">To<input id="filterEnd" type="datetime-local" class="input" value="2024-03-15T23:59" /></label>
+                <button class="btn" data-action="filterByDateRange">By date range</button>
+              </div>
+              <p class="card-hint"><span class="fn">filterSalesByDateRange</span> — inclusive at both ends</p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card">
+              <h3 class="card-title">Filter menu &amp; locations</h3>
+              <div class="row">
+                <label class="field">
+                  Category
+                  <select id="filterCategory" class="input">
+                    <option>Meat</option>
+                    <option>Side</option>
+                    <option>Beverage</option>
+                    <option>Dessert</option>
+                    <option>Combo</option>
+                  </select>
+                </label>
+                <button class="btn" data-action="filterByCategory">Filter menu</button>
+                <button class="btn-secondary" data-action="filterActive">Active locations</button>
+              </div>
+              <p class="card-hint"><span class="fn">filterMenuItemsByCategory</span> · <span class="fn">filterActiveLocations</span></p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card">
+              <h3 class="card-title">Sort locations by capacity</h3>
+              <div class="row">
+                <label class="field">
+                  Order
+                  <select id="sortCapacityOrder" class="input">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                  </select>
+                </label>
+                <button class="btn" data-action="sortByCapacity">Sort</button>
+              </div>
+              <p class="card-hint"><span class="fn">sortLocationsByCapacity</span> — returns a new array</p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card">
+              <h3 class="card-title">Sort menu by price</h3>
+              <div class="row">
+                <label class="field">
+                  Currency
+                  <select id="sortPriceCurrency" class="input"><option>USD</option><option>COP</option></select>
+                </label>
+                <label class="field">
+                  Order
+                  <select id="sortPriceOrder" class="input">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                  </select>
+                </label>
+                <button class="btn" data-action="sortByPrice">Sort</button>
+              </div>
+              <p class="card-hint"><span class="fn">sortMenuItemsByPrice</span></p>
+              <div class="output" data-output></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Search -->
+      <section id="search" class="border-t border-line">
+        <div class="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12">
+          <p class="eyebrow">02 · Search</p>
+          <h2 class="section-title">Linear &amp; binary search</h2>
+          <div class="mt-8 grid gap-6 lg:grid-cols-2">
+            <section class="card">
+              <h3 class="card-title">Linear search</h3>
+              <div class="row">
+                <label class="field">
+                  Location ID
+                  <input id="searchLocationId" list="locationIdOptions" class="input" value="LOC-MIAMI-01" />
+                </label>
+                <button class="btn" data-action="searchLocationById">Find location</button>
+              </div>
+              <p class="card-hint"><span class="fn">findLocationById</span> — exact match, returns null if missing</p>
+              <div class="row">
+                <label class="field">
+                  Menu item name
+                  <input id="searchMenuName" list="menuNameOptions" class="input" value="french fries" />
+                </label>
+                <button class="btn" data-action="searchMenuItemByName">Find item</button>
+              </div>
+              <p class="card-hint"><span class="fn">findMenuItemByName</span> — case-insensitive</p>
+              <datalist id="locationIdOptions"></datalist>
+              <datalist id="menuNameOptions"></datalist>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card">
+              <h3 class="card-title">Binary search by capacity</h3>
+              <div class="row">
+                <label class="field">
+                  Target seating capacity
+                  <input id="binaryCapacity" type="number" min="0" class="input w-36" value="100" />
+                </label>
+                <button class="btn" data-action="binarySearchCapacity">Search</button>
+              </div>
+              <p class="card-hint">
+                <span class="fn">binarySearchLocationByCapacity</span> — locations are sorted ascending first; returns
+                the index or -1
+              </p>
+              <div class="output" data-output></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Financials -->
+      <section id="financials" class="bg-olive text-white">
+        <div class="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-white/70">03 · Two currencies, one standard</p>
+          <h2 class="section-title">Financial calculations</h2>
+          <p class="mt-3 max-w-2xl text-sm text-white/80">
+            Revenue, margin and waste in COP and USD, the numbers Felipe uses to make decisions across 14 locations.
+          </p>
+          <div class="mt-8 grid gap-6 text-ink lg:grid-cols-2">
+            <section class="card bg-paper">
+              <h3 class="card-title">Daily revenue</h3>
+              <div class="row">
+                <label class="field">Date<input id="revenueDate" type="date" class="input" value="2024-03-15" /></label>
+                <label class="field">
+                  Currency
+                  <select id="revenueCurrency" class="input"><option>USD</option><option>COP</option></select>
+                </label>
+                <button class="btn" data-action="dailyRevenue">Calculate</button>
+              </div>
+              <p class="card-hint"><span class="fn">calculateDailyRevenue</span></p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card bg-paper">
+              <h3 class="card-title">Location margin</h3>
+              <div class="row">
+                <label class="field">Location<select id="marginLocationId" class="input" data-location-select></select></label>
+                <label class="field">
+                  Currency
+                  <select id="marginCurrency" class="input"><option>USD</option><option>COP</option></select>
+                </label>
+                <button class="btn" data-action="locationMargin">Calculate</button>
+              </div>
+              <p class="card-hint">
+                <span class="fn">calculateLocationMargin</span> — ((revenue − ingredient cost) / revenue) × 100
+              </p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card bg-paper">
+              <h3 class="card-title">Waste cost</h3>
+              <div class="row">
+                <label class="field">Location<select id="wasteLocationId" class="input" data-location-select></select></label>
+                <label class="field">
+                  Currency
+                  <select id="wasteCurrency" class="input"><option>USD</option><option>COP</option></select>
+                </label>
+                <button class="btn" data-action="wasteCost">Calculate</button>
+              </div>
+              <p class="card-hint"><span class="fn">calculateWasteCost</span></p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card bg-paper">
+              <h3 class="card-title">Currency conversion</h3>
+              <div class="row">
+                <label class="field">Amount<input id="convertAmount" type="number" step="any" class="input w-36" value="18.5" /></label>
+                <label class="field">
+                  From
+                  <select id="convertFrom" class="input"><option>USD</option><option>COP</option></select>
+                </label>
+                <label class="field">
+                  To
+                  <select id="convertTo" class="input"><option>COP</option><option>USD</option></select>
+                </label>
+                <button class="btn" data-action="convertAmount">Convert</button>
+              </div>
+              <p class="card-hint"><span class="fn">convertCurrency</span> — fixed rate 1 USD = 4,000 COP</p>
+              <div class="output" data-output></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Performance & reports -->
+      <section id="reports">
+        <div class="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12">
+          <p class="eyebrow">04 · Reports</p>
+          <h2 class="section-title">Performance &amp; reports</h2>
+          <div class="mt-8 grid gap-6 lg:grid-cols-2">
+            <section class="card">
+              <h3 class="card-title">Location performance ranking</h3>
+              <div class="row">
+                <button class="btn" data-action="rankPerformance">Rank locations</button>
+              </div>
+              <p class="card-hint">
+                <span class="fn">rankLocationsByPerformance</span> — revenue 40 · efficiency 30 · waste 20 · margin 10
+              </p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card">
+              <h3 class="card-title">Country comparison</h3>
+              <div class="row">
+                <button class="btn" data-action="countryComparison">Compare Colombia vs USA</button>
+              </div>
+              <p class="card-hint"><span class="fn">calculateCountryComparison</span></p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card">
+              <h3 class="card-title">Sales reports</h3>
+              <div class="row">
+                <button class="btn" data-action="salesByPaymentMethod">Count by payment method</button>
+              </div>
+              <div class="row">
+                <label class="field">
+                  Currency
+                  <select id="ticketCurrency" class="input"><option>USD</option><option>COP</option></select>
+                </label>
+                <button class="btn" data-action="averageTicket">Average ticket</button>
+              </div>
+              <div class="row">
+                <label class="field">Top N<input id="topN" type="number" min="0" class="input w-24" value="3" /></label>
+                <button class="btn" data-action="topSellingItems">Top selling items</button>
+              </div>
+              <p class="card-hint">
+                <span class="fn">countSalesByPaymentMethod</span> · <span class="fn">calculateAverageTicket</span> ·
+                <span class="fn">findTopSellingItems</span>
+              </p>
+              <div class="output" data-output></div>
+            </section>
+
+            <section class="card">
+              <h3 class="card-title">Waste report</h3>
+              <div class="row">
+                <button class="btn" data-action="wasteByReason">Group waste by reason</button>
+              </div>
+              <p class="card-hint"><span class="fn">groupWasteByReason</span></p>
+              <div class="output" data-output></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Validations -->
+      <section id="validations" class="border-t border-line bg-white/40">
+        <div class="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12">
+          <p class="eyebrow">05 · Data quality</p>
+          <h2 class="section-title">Business validations</h2>
+          <section class="card mt-8">
+            <h3 class="card-title">Validate an entity</h3>
+            <p class="card-hint">
+              Edit the JSON and run <span class="fn">validateMenuItem</span>,
+              <span class="fn">validateSaleTransaction</span> or <span class="fn">validateLocation</span>.
+            </p>
+            <div class="row">
+              <label class="field">
+                Entity
+                <select id="validateEntity" class="input">
+                  <option>MenuItem</option>
+                  <option>SaleTransaction</option>
+                  <option>Location</option>
+                </select>
+              </label>
+              <button class="btn-secondary" data-action="loadValidExample">Load valid example</button>
+              <button class="btn-secondary" data-action="loadInvalidExample">Load invalid example</button>
+              <button class="btn" data-action="validateJson">Validate</button>
+            </div>
+            <textarea id="validateJson" rows="14" spellcheck="false" class="input w-full font-mono text-xs"></textarea>
+            <div class="output" data-output></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-line">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-5 py-6 text-xs text-ink/60 sm:px-8 lg:px-12">
+        <p><span class="font-display text-base text-ink">brasaland</span> · Medellín roots. A table for everyone.</p>
+        <p>Compiled from <code>src/web/app.ts</code> — run <code>npm run web</code> to rebuild and serve.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="../dist/web/app.js"></script>
+  </body>
+</html>
