@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Brasaland palette — shared with the public website (uis/website). */
+@theme {
+  --color-paper: #f7f5ef;
+  --color-ink: #252820;
+  --color-muted: #6b6e64;
+  --color-flame: #b9482d;
+  --color-flame-dark: #9a3a23;
+  --color-olive: #4b6048;
+  --color-line: #dcd8ce;
+  --color-ember: #d98a2b;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-dm-serif), Georgia, serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-flame);
+  outline-offset: 2px;
+}
