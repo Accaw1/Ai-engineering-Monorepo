@@ -9,6 +9,9 @@ The two main projects stored here are:
 
 The Brasaland public website is in [`website/`](./website/README.md). It provides the landing page and a locally simulated contact form; see its README for Codespaces run instructions.
 
+The **Talent Pipeline Tracker** is in [`talent-pipeline-tracker/`](./talent-pipeline-tracker/README.md). It is the internal People & Culture tool for managing candidates in the Executive Assistant search (Next.js + TypeScript, consuming the Talent Tracker API); see its README for setup.
+
+
 Organize `uis/` by **different concerns** — each subfolder covers a distinct area of the company (for example, public web vs internal operations) and includes its own technical and functional documentation.
 
 - **Main purpose**: to centralize in a single place all frontend applications that support the company's use cases.
