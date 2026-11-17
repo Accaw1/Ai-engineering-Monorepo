@@ -54,7 +54,7 @@ Estás construyendo **una sola empresa** a lo largo de muchos hitos y proyectos.
 > 💡 Actualmente el repositorio ofrece solo una **estructura base de carpetas y documentación**. Todavía no incluye aplicaciones ejecutables ni scripts globales en la raíz.
 >
 > - `CONTEXT.md` es un placeholder y debe sustituirse por el contexto de la empresa asignada.
-> - No existe todavía un `AGENTS.md` en la raíz.
+> - Configuración para agentes de código: lee primero [`AGENTS.md`](./AGENTS.md). Remite al [`memory-bank/`](./memory-bank/) (contexto de negocio y técnico) y a las reglas y skills con alcance definido en [`.agents/`](./.agents/).
 > - Existe metadata del paquete compartido en `packages/shared/package.json` (`@repo/shared-types`), pero aún no hay runner de workspace en raíz.
 
 ---
