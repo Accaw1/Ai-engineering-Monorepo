@@ -1,6 +1,6 @@
 # System Patterns — Where Code Goes and How It Fits
 
-Last updated: 2026-11-17
+Last updated: 2026-11-25
 
 > Technical context: the monorepo map and placement rules. This file is enforced by [`.agents/rules/monorepo-structure.md`](../.agents/rules/monorepo-structure.md). Read the `README.md` of a folder before adding anything to it.
 
@@ -10,7 +10,7 @@ Last updated: 2026-11-17
 | --- | --- | --- | --- |
 | `uis/website` | **Public corporate website.** Home route `/`. Brand and copy aligned with `CONTEXT.md`/`BRIEFING.md` | **Exists** (Vite + Tailwind) | All public pages go here. Don't start a second public site |
 | `uis/backoffice` | **Internal company app** with its own layout, separate from the public site. Entry view on `/`. Home for operations, procurement, HR, training and executive dashboards | **Not created yet** | Create it here when the first internal feature is requested. Add `uis/backoffice/README.md` and list it in `uis/README.md` (+ `.es.md`) |
-| `services/` | **Backend APIs and services.** One centralized FastAPI app (planned `services/api/`) with domain routers. One subfolder per service | **Not created yet** | Add endpoints to the same API. A new subfolder only for a worker that must run separately. Each service gets a README |
+| `services/` | **Backend APIs and services.** One centralized FastAPI app (planned `services/api/`) with domain routers. One subfolder per service | **Not created yet.** Proposed internal layout (domain folders with router/schemas/models/service/repository) in [`docs/ARCHITECTURE_PROPOSAL.md`](../docs/ARCHITECTURE_PROPOSAL.md), pending CTO review | Add endpoints to the same API. A new subfolder only for a worker that must run separately. Each service gets a README |
 | `uis/<other>` | Other UIs, each covering a different concern | `uis/talent-pipeline-tracker` exists (Milestone 3) | **Don't add new internal tools as siblings.** New internal features go into `uis/backoffice`. Adding a new `uis/` subfolder needs developer confirmation |
 
 **Forbidden parallel trees.** Never create `apps/`, `frontend/`, `backend/`, `web/`, `client/`, `server/`, `api/` (at root), `src/` (at root), `uis/frontend`, `uis/admin`, `services/backend` or similar folders. Product code also never goes at the repo root.

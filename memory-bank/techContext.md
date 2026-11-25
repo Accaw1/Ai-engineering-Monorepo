@@ -1,6 +1,6 @@
 # Tech Context — Stack, Decisions and Constraints
 
-Last updated: 2026-11-17
+Last updated: 2026-11-25
 
 > Technical context. Where code goes is defined in [`systemPatterns.md`](./systemPatterns.md). Business context is in [`projectbrief.md`](./projectbrief.md).
 
@@ -27,7 +27,7 @@ Last updated: 2026-11-17
 | --- | --- | --- | --- |
 | D1 | **One monorepo, one folder per responsibility** (see `README.md` folder guide) | Agents and humans can find things without ambiguity | Accepted |
 | D2 | **Public site and internal app are separate frontends**: `uis/website` and `uis/backoffice` | Different users, auth, layout and release pace | Accepted. Backoffice not created yet |
-| D3 | **One centralized FastAPI backend** under `services/` (planned `services/api/`) with one router per domain (locations, menus, sales, customers, suppliers, telemetry). Extract a separate worker only when it really has to run outside the API | Template guidance: keep complexity low, avoid early microservices | Accepted. Not created yet |
+| D3 | **One centralized FastAPI backend** under `services/` (planned `services/api/`) with one router per domain (locations, menus, sales, customers, suppliers, telemetry). Extract a separate worker only when it really has to run outside the API | Template guidance: keep complexity low, avoid early microservices | Accepted. Not created yet. Internal structure proposed in [`docs/ARCHITECTURE_PROPOSAL.md`](../docs/ARCHITECTURE_PROPOSAL.md) (pending CTO review) |
 | D4 | **Domain logic is pure TypeScript in `packages/`**, separate from UI and transport | Testable and reusable by the backoffice and other consumers | Accepted (`packages/brasaland-operations`) |
 | D5 | **Money is always a `Price { USD, COP }`**, not a single number. Conversion uses a **fixed rate of 1 USD = 4000 COP** through `convertCurrency` | Two-currency business; the briefing fixes the rate | Accepted. Revisit when a real FX source exists |
 | D6 | **Date-dependent functions take an injectable date** (`referenceDate`, `currentYear`) that defaults to today | Deterministic tests, pure functions | Accepted |
